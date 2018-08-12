@@ -28,7 +28,8 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        //
+        $courses = Course::all();
+        return view('pages.school')->nest('create', 'students.create', compact('courses'));
     }
 
     /**

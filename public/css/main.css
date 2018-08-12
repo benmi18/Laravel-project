@@ -8,6 +8,10 @@ body {
     vertical-align: text-bottom;
 }
 
+.container{
+    width: 80% !important;
+}
+
 /*
  * Sidebar
  */
@@ -101,4 +105,13 @@ body {
 .form-control-dark:focus {
     border-color: transparent;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+.navbar{
+    margin-bottom: 20px;
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1500px !important;
+    }
 }

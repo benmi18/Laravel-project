@@ -1,8 +1,9 @@
 <div class="row">
     <div class="col col-6">
-        <p>
-            <span>Courses</span><span>+</span>
-        </p>
+        <div class="row">
+            <div class="col col-9"><p>Courses</p></div>
+            <div class="col col-3"><a href="/courses/create">+</a></div>
+        </div>
         <ul class="list-group">
             @foreach ($courses as $course)
                 <a href="/courses/{{$course->id}}">
@@ -21,9 +22,10 @@
         </ul>
     </div>
     <div class="col col-6">
-        <p>
-            <span>Students</span><span>+</span>
-        </p>
+        <div class="row">
+            <div class="col col-9"><p>Students</p></div>
+            <div class="col col-3"><a href="/students/create">+</a></div>
+        </div>
         <ul class="list-group">
             @foreach ($students as $student)
                 <a href="/students/{{$student->id}}">

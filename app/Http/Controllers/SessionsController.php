@@ -80,7 +80,6 @@ class SessionsController extends Controller
      */
     public function destroy(Session $session)
     {
-        auth()->logout();
-	    return Redirect::route('home');
+        //
     }
 }

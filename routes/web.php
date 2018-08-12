@@ -11,11 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('pages.school');
-});
 
-Route::get('/school', 'PagesController@school')->name('home');
+Route::get('/', 'PagesController@school')->name('home');
+Route::get('/school', 'PagesController@school');
 Route::get('/admin', 'PagesController@admin');
 
 Route::resource('courses', 'CoursesController');
