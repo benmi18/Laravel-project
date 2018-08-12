@@ -6,9 +6,12 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/school">School</a>
             </li>
+
+            @if (auth()->user()->role == 'Owner')
             <li class="nav-item">
                 <a class="nav-link" href="/admin">Admin</a>
             </li>
+            @endif
         </ul>
 
         <ul class="navbar-nav ml-auto">
