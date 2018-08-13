@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Route;
 use App\Student;
 use App\Course;
 use Illuminate\Http\Request;
@@ -62,7 +63,9 @@ class StudentsController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        // return Course::all()->toArray();
+        $courses = Course::all();
+        return view('pages.school')->nest('create', 'students.create', compact('courses', 'student'));
     }
 
     /**

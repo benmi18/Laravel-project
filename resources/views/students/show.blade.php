@@ -23,7 +23,6 @@
                 <p>{{$student->email}}</p>
             </div>
         </div>
-
         <div class="row">
             <div class="col col-4">
                 <ul class="list-group list-group-flush">
