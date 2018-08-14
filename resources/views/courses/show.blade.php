@@ -8,7 +8,7 @@
             </div>
 
             <div class="col col-2">
-                <a href="/students/{{$course->id}}/edit" class="btn btn-default">Edit</a>
+                <a href="/courses/{{$course->id}}/edit" class="btn btn-default">Edit</a>
             </div>
         </div>
 

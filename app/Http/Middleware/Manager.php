@@ -16,10 +16,10 @@ class Manager
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role == 'manager') {
+        if (Auth::user()->role != 'owner' && Auth::user()->role != 'manager') {
+            return redirect()->back();
+        }else{
             return $next($request);
-        }else {
-            return redirect('/');
         }
     }
 }

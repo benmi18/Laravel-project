@@ -8,7 +8,7 @@
                     <a class="nav-link" href="/school">School</a>
                 </li>
 
-                @if (auth()->user()->role == 'Owner')
+                @if (auth()->user()->role != 'sales')
                 <li class="nav-item">
                     <a class="nav-link" href="/admin">Admin</a>
                 </li>

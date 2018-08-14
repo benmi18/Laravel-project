@@ -18,8 +18,6 @@ class Sales
     {
         if (Auth::check() && Auth::user()->role == 'sales') {
             return $next($request);
-        }else {
-            return redirect('/');
         }
     }
 }

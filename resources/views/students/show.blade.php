@@ -14,7 +14,7 @@
 
         <div class="row">
             <div class="col col-4">
-                <img src="/images/students/{{$student->image}}" alt="student image" width="100%">
+                <img src="/storage/images/students/{{$student->image}}" alt="student image" width="100%">
             </div>
 
             <div class="col col-8">

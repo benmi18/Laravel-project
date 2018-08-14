@@ -11,6 +11,7 @@ class CoursesController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
+        $this->middleware('manager', ['only' => ['create', 'store', 'destroy', 'edit', 'update']]);
     }
     /**
      * Display a listing of the resource.
@@ -62,7 +63,8 @@ class CoursesController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        $courses = Course::all();
+        return view('pages.school')->nest('create', 'courses.create', compact('course'));
     }
 
     /**

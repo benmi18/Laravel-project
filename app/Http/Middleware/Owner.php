@@ -15,10 +15,10 @@ class Owner
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role == 'owner') {
+        if (Auth::user()->role != 'owner') {
+            return redirect()->back();
+        }else{
             return $next($request);
-        }else {
-            return redirect('/');
         }
     }
 }
