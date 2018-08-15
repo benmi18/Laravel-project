@@ -17,7 +17,14 @@
 
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <p class="navbar-text">{{auth()->user()->name}} | {{auth()->user()->role}}</p>
+                    <div class="row d-flex justify-content-end">
+                        <div class="col col-3 m-0 text-right pr-2">
+                            <p class="navbar-text">{{auth()->user()->name}} | {{auth()->user()->role}}</p>
+                        </div>
+                        <div class="col col-1 m-0 pl-2">
+                            <img class="mt-1" src="/storage/images/users/{{auth()->user()->image}}" width="100%">
+                        </div>
+                    </div>
                 </li>
             </ul>
 
