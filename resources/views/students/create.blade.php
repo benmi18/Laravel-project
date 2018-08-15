@@ -20,13 +20,15 @@
     <div class="row mb-5">
         <div class="col">
             {{-- Submit button --}} 
-            @if ($edit)
-                {!! Form::open(['action' => ['StudentsController@update', $student->id], 'method' => 'POST']) !!} 
+            
+            @if ($edit) {{-- PUT Request for Edit --}} 
+                {!! Form::open(['action' => ['StudentsController@update', $student->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} 
                     {{ method_field('PUT') }} 
-                    {{Form::submit('Delete', ['class' => 'btn btn-danger mb-2', 'id' => 'delete-btn'])}}
+                    {{Form::submit('Submit', ['class' => 'btn btn-warning mb-2'])}}
                 {!! Form::close() !!} 
-            @else
-                {!! Form::open(['action' => ['StudentsController@store', $student->id], 'method' => 'POST']) !!} 
+                
+            @else {{-- POST Request for Create --}}
+                {!! Form::open(['action' => ['StudentsController@store', $student->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} 
                     {{Form::submit('Submit', ['class' => 'btn btn-success mb-2'])}}
                 {!! Form::close() !!} 
             @endif
@@ -35,7 +37,7 @@
         <div class="col text-right">
             {{-- Delete button --}} 
             @if ($edit) 
-                {!! Form::open(['action' => ['StudentsController@destroy', $student->id], 'method' => 'POST']) !!} 
+                {!! Form::open(['action' => ['StudentsController@destroy', $student->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} 
                     {{ method_field('DELETE') }} 
                     {{Form::submit('Delete', ['class' => 'btn btn-danger mb-2', 'id' => 'delete-btn'])}}
                 {!! Form::close() !!} 
@@ -52,15 +54,15 @@
             <div class="col col-7">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="name" class="form-control" id="name" name="name" value="<?= $edit ? $student->name : '' ?>">
+                    <input type="text" class="form-control" id="name" name="name" value="<?= $edit ? $student->name : '' ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="number" class="form-control" id="phone" name="phone" value="<?= $edit ? $student->phone : '' ?>">
+                    <input type="number" class="form-control" id="phone" name="phone" value="<?= $edit ? $student->phone : '' ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<?= $edit ? $student->email : '' ?>">
+                    <input type="email" class="form-control" id="email" name="email" value="<?= $edit ? $student->email : '' ?>" required>
                 </div>
             </div>
 

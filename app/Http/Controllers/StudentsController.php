@@ -110,7 +110,38 @@ class StudentsController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:2',
+            'phone' => 'required|integer',
+            'email' => 'required|email',
+            'image' => 'image|nullable|max:1700',
+        ]);
+
+        // Handle file upload
+        if ($request->hasFile('image')) {
+            // Get the file name with the extension
+            $fileNameWithExt = request()->file('image')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            // Get just EXT
+            $extension = request()->file('image')->getClientOriginalExtension();
+            // File name to store
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = request()->file('image')->storeAs('public/images/students', $fileNameToStore);
+
+            // Update the student
+            $student->image = $fileNameToStore;
+        } 
+        
+        // Update Student 
+        $student->name = $request->input('name');
+        $student->phone = $request->input('phone');
+        $student->email = $request->input('email');
+        $student->save();
+        $student->courses()->attach(request('courses'));
+
+        return redirect('/students/'.$student->id)->with('success', 'Student Created');
     }
 
     /**
@@ -122,7 +153,7 @@ class StudentsController extends Controller
     public function destroy(Student $student)
     {
         $errors = new MessageBag();
-        // add your error messages:
+        // Student in course error
         $errors->add('studen_in_course', 'Student in course');
 
         // Check for courses
