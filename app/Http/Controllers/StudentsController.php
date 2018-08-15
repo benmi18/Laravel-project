@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\MessageBag;
 use App\Student;
 use App\Course;
 use Illuminate\Http\Request;
 
 class StudentsController extends Controller
 {
+
     public function __construct(){
         $this->middleware('auth');
         $this->middleware('manager', ['only' => ['create', 'store', 'destroy']]);
@@ -119,9 +121,13 @@ class StudentsController extends Controller
      */
     public function destroy(Student $student)
     {
+        $errors = new MessageBag();
+        // add your error messages:
+        $errors->add('studen_in_course', 'Student in course');
+
         // Check for courses
-        if (coutnt($student->courses)) {
-            return redirect()->back()->with('error', 'Student asignt to courses');
+        if (count($student->courses)) {
+            return redirect()->back()->withErrors($errors);
         }
         if ($student->image != 'student.jpg') {
             // Delete the image

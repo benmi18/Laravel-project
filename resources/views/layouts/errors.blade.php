@@ -1,4 +1,4 @@
-@if (count($errors))
+@if ($errors->any())
     <div class="form-froup">
         <div class="alert alert-danger">
             <ul>

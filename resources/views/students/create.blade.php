@@ -12,17 +12,21 @@
         <h3><?= $edit ? 'Edit '.$student->name : 'Add New Student' ?></h3>
     </div>
     <hr>
-    {{-- {!! Form::open(['action' => ['StudentsController@destroy'], 'method' => 'POST']) !!}
-        {{Form::hidden('_method', 'DELETE')}}
-        {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-    {!! Form::close() !!} --}}
+    
+    @include('layouts.errors')
+    @if ($edit)
+    {{-- Delete button --}}
+        {!! Form::open(['action' => ['StudentsController@destroy', $student->id], 'method' => 'POST']) !!}
+            {{ method_field('DELETE') }}
+            {{Form::submit('Delete', ['class' => 'btn btn-danger mb-2', 'onclick' => 'return alert()'])}}
+        {!! Form::close() !!}
+    @endif
+    
     <form method="POST" action="/students" enctype="multipart/form-data">
         {{csrf_field()}}
         {{-- Save Delete buttons --}}
         <button type="submit" class="btn btn-primary mb-2">Submit</button>
-        @if ($edit)
-            <button class="btn btn-danger mb-2">Delete</button>
-        @endif
+        
 
         {{-- Student Info --}}
         <div class="form-group">
@@ -41,10 +45,10 @@
         {{-- Image --}}
         <div class="row">
             <div class="col col-5 m-auto">
-                <img src="/storage/images/students/<?= $edit ? $student->image : 'student.jpg' ?>" class="mb-2" width="100%">
+                <img src="/storage/images/students/<?= $edit ? $student->image : 'student.jpg' ?>" class="mb-2 pre-img" width="100%">
                 <div class="input-group mb-3">
                     <div class="custom-file">
-                        <input type="file" name="image" class="custom-file-input" id="image">
+                        <input type="file" name="image" class="custom-file-input" id="image" onchange="previewFile()">
                         <label class="custom-file-label" for="image">Choose file</label>
                     </div>
                 </div>
@@ -68,6 +72,35 @@
             @endforeach
         </div>
     </form>
-    @include('layouts.errors')
 </div>
 @endsection
+<script>
+    // Upload image preview //
+    function previewFile() {
+        var preview = document.querySelector('.pre-img');
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader = new FileReader();
+
+        // when user select an image, `reader.readAsDataURL(file)` will be triggered
+        // reader instance will hold the result (base64) data
+        // next, event listener will be triggered and we call `reader.result` to get
+        // the base64 data and replace it with the image tag src attribute
+        reader.addEventListener("load", function () {
+            preview.src = reader.result;
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    };
+
+    function alert() {
+        if (window.confirm("Are You Sure You Wand To Delete")) {
+            document.forms[1].submit();
+            console.log('alert true');
+        } else {
+            return false;
+            console.log('alert false');
+        }
+    }
+</script>
