@@ -1,4 +1,6 @@
-@extends('layouts.master') @section('school-main')
+@extends('layouts.master') 
+
+@section('school-main')
 <?php
 // Check The Current Route To Determine If Location Is Create Or Edit
     $route = Route::currentRouteName();
@@ -16,37 +18,28 @@
     @endsection
     {{-- End Title Section --}}
     <hr>
-    {{-- Submit / Delete Buttons --}}
-    <div class="row mb-5">
-        <div class="col">
-            {{-- Submit button --}} 
-            
-            @if ($edit) {{-- PUT Request for Edit --}} 
-                {!! Form::open(['action' => ['StudentsController@update', $student->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} 
-                    {{ method_field('PUT') }} 
-                    {{Form::submit('Submit', ['class' => 'btn btn-warning mb-2'])}}
-                {!! Form::close() !!} 
-                
-            @else {{-- POST Request for Create --}}
-                {!! Form::open(['action' => ['StudentsController@store', $student->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} 
-                    {{Form::submit('Submit', ['class' => 'btn btn-success mb-2'])}}
-                {!! Form::close() !!} 
-            @endif
-        </div>
 
-        <div class="col text-right">
-            {{-- Delete button --}} 
-            @if ($edit) 
-                {!! Form::open(['action' => ['StudentsController@destroy', $student->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} 
-                    {{ method_field('DELETE') }} 
-                    {{Form::submit('Delete', ['class' => 'btn btn-danger mb-2', 'id' => 'delete-btn'])}}
-                {!! Form::close() !!} 
-            @endif 
-        </div>
-    </div>
+    
+    {{-- Delete button --}} 
+    @if ($edit) 
+        {!! Form::open(['action' => ['StudentsController@destroy', $student->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} 
+            {{ method_field('DELETE') }} 
+            {{Form::submit('Delete', ['class' => 'btn btn-danger mb-2 float-right', 'id' => 'delete-btn'])}}
+        {!! Form::close() !!} 
+    @endif
 
-    {{-- Form --}}
-    <form method="POST" action="/students" enctype="multipart/form-data">
+    {{-- Form Start --}}
+    {{-- Submit Button --}}
+    @if ($edit) {{-- PUT Request for Edit --}} 
+        {!! Form::open(['action' => ['StudentsController@update', $student->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} 
+            {{ method_field('PUT') }} 
+            {{Form::submit('Submit', ['class' => 'btn btn-warning mb-5'])}}
+        
+    @else {{-- POST Request for Create --}}
+        {!! Form::open(['action' => ['StudentsController@store'], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} 
+            {{Form::submit('Submit', ['class' => 'btn btn-success mb-5'])}}
+    @endif
+    
         {{csrf_field()}}
 
         {{-- Student Info --}}
@@ -96,7 +89,7 @@
             </div>
             @endforeach
         </div>
-    </form>
+    {!! Form::close() !!} 
     @include('layouts.errors')
 </div>
 @include('layouts.scripts')

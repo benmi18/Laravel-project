@@ -8,23 +8,29 @@
             <h5>Student: {{$student->name}}</h5>
         </div>
 
-        <div class="col col-2">
+        <div class="col col-2"> {{-- Edit btn --}}
             <a href="/students/{{$student->id}}/edit" class="btn btn-primary">Edit</a>
         </div>
         @endsection
         {{-- End Title Section --}}
 
+        {{-- Student Info --}}
         <div class="row mb-5">
+            {{-- Image --}}
             <div class="col col-4">
                 <img src="/storage/images/students/{{$student->image}}" alt="student image" width="100%">
             </div>
-
+            
+            {{-- Info --}}
             <div class="col col-8">
                 <p><h3>{{$student->name}}</h3></p>
                 <p>{{$student->phone}}</p>
                 <p>{{$student->email}}</p>
             </div>
         </div>
+        {{-- End Student Info --}}
+
+        {{-- Courses --}}
         <div class="row">
             <div class="col col-4">
                 <h4 class="mb-3">Couses List</h4>
@@ -39,5 +45,6 @@
                 </ul>
             </div>
         </div>
+        {{-- End Courses --}}
     </div>
 @endsection

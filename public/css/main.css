@@ -110,6 +110,14 @@ body {
     margin-bottom: 20px;
 }
 
+.nav-user{
+    width: 250px;
+}
+
+.nav-user-image{
+    max-width: 50px;
+}
+
 @media (min-width: 1200px) {
     .container {
         max-width: 1500px !important;

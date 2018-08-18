@@ -7,6 +7,7 @@ use Illuminate\Support\MessageBag;
 use App\Student;
 use App\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class StudentsController extends Controller
 {
@@ -44,12 +45,14 @@ class StudentsController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate Form Input
         $this->validate(request(), [
             'name' => 'required|min:2',
             'phone' => 'required|integer',
             'email' => 'required|email',
             'image' => 'image|nullable|max:1700',
         ]);
+
         // Handle file upload
         if ($request->hasFile('image')) {
             // Get the file name with the extension
@@ -139,6 +142,7 @@ class StudentsController extends Controller
         $student->phone = $request->input('phone');
         $student->email = $request->input('email');
         $student->save();
+        $student->courses()->detach();
         $student->courses()->attach(request('courses'));
 
         return redirect('/students/'.$student->id)->with('success', 'Student Created');
@@ -160,13 +164,13 @@ class StudentsController extends Controller
         if (count($student->courses)) {
             return redirect()->back()->withErrors($errors);
         }
+
         if ($student->image != 'student.jpg') {
             // Delete the image
-            Storage::delete('public/images/students'.$post->image_path);
+            Storage::delete('public/images/students'.$student->image);
         }
 
         $student->delete();
         return redirect('/')->with('success', 'Student Removed');
-
     }
 }

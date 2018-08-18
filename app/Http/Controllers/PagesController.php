@@ -15,10 +15,14 @@ class PagesController extends Controller
     }
 
     public function school(){
-        return view('pages.school');
+        $students = Student::all();
+        $courses = Course::all();
+
+        return view('pages.school')->nest('title', 'school_title', compact(['students', 'courses']));
     }
 
     public function admin(){
-        return view('pages.admin');
+        $users = User::all();
+        return view('pages.admin')->nest('title', 'admin_title', compact(['users']));
     }
 }

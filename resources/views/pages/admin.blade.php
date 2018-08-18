@@ -1,10 +1,18 @@
 @extends('layouts.master')
 @section('content')
     <div class="row">
-        <div class="col col-3">
+        {{-- Left Panel Column --}}
+        <div class="col col-3 ">
             @include('layouts.admin-left-panel')
         </div>
-        <div class="col col-9">
+
+        {{-- Right Panel Column --}}
+        <div class="col col-5 ml-auto mr-auto">
+            {{-- Title --}}
+            <div class="row mb-3 alert alert-secondary">
+                @yield('title')
+            </div>
+            {{-- Content --}}
             @yield('admin-main')
         </div>
     </div>
