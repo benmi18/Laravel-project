@@ -54,7 +54,7 @@
                     {{-- Role Options --}}
                     <div class="col">
                         <label for="role">Role</label>
-                        <select name="role" class="form-control">
+                        <select name="role" class="form-control" @if ($user->role == 'owner') disabled @endif>
                             <option value="null"></option>
                             <option value="manager">Manager</option>
                             <option value="sales">Sales</option>
@@ -80,7 +80,7 @@
                 <div class="form-group">
                     <label for="password">{{ __('Password') }}</label>
                     
-                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required> 
+                    <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"> 
                     @if ($errors->has('password'))
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $errors->first('password') }}</strong>
@@ -91,7 +91,7 @@
                 {{-- Password Confirm --}}
                 <div class="form-group">
                     <label for="password-confirm">{{ __('Confirm Password') }}</label>
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
                 </div>
             </div>
 

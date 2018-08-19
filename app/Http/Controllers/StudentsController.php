@@ -132,7 +132,6 @@ class StudentsController extends Controller
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
             $path = request()->file('image')->storeAs('public/images/students', $fileNameToStore);
-
             // Update the student
             $student->image = $fileNameToStore;
         } 

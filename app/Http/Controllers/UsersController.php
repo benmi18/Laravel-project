@@ -106,9 +106,46 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        // Validate Form Input
+        $this->validate($request, [
+            'name' => 'required|min:2',
+            'phone' => 'required|integer',
+            'email' => 'required|email',
+            'image' => 'image|nullable|max:1700',
+            'role' => 'in:manager,sales',
+        ]);
+
+        // Validate Password
+        if (request('password')) {
+            $this->validate(request(), [
+                'password' => 'string|min:6|confirmed'
+            ]);
+        }
+
+        // Handle file upload
+        if ($request->hasFile('image')) {
+            // Get the file name with the extension
+            $fileNameWithExt = request()->file('image')->getClientOriginalName();
+            // Get just filename
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            // Get just EXT
+            $extension = request()->file('image')->getClientOriginalExtension();
+            // File name to store
+            $fileNameToStore = $filename.'_'.time().'.'.$extension;
+            // Upload Image
+            $path = request()->file('image')->storeAs('public/images/users', $fileNameToStore);
+        } 
+
+        // Update The User
+        $user->name = $request->input('name');
+        $user->phone = $request->input('phone'); 
+        $user->email = $request->input('email'); 
+        $user->password = $request->input('password'); 
+        $user->role = $request->input('role'); 
+
+        return redirect('/users/'.$user->id)->with('success', 'Student Created');
     }
 
     /**
