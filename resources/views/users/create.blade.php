@@ -22,7 +22,7 @@
     
     {{-- Delete button --}} 
     @if ($edit) 
-        {!! Form::open(['action' => ['UsersController@destroy', $user->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} 
+        {!! Form::open(['action' => ['UsersController@destroy', $user->id], 'method' => 'POST']) !!} 
             {{ method_field('DELETE') }} 
             {{Form::submit('Delete', ['class' => 'btn btn-danger mb-2 float-right', 'id' => 'delete-btn'])}}
         {!! Form::close() !!} 
@@ -48,14 +48,14 @@
                     {{-- Name --}}
                     <div class="col">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" value="<?= $edit ? $user->name : '' ?>" required>
+                        <input type="text" class="form-control" id="name" name="name" value="<?= $edit ? $user->name : '' ?>">
                     </div>
 
                     {{-- Role Options --}}
                     <div class="col">
                         <label for="role">Role</label>
-                        <select name="role" class="form-control" @if ($user->role == 'owner') disabled @endif>
-                            <option value="null"></option>
+                        <select name="role" class="form-control" @if ($edit && $user->role == 'owner') disabled @endif>
+                            <option></option>
                             <option value="manager">Manager</option>
                             <option value="sales">Sales</option>
                         </select>
@@ -66,13 +66,13 @@
                     {{-- Phone --}}
                     <div class="col">
                         <label for="phone">Phone</label>
-                        <input type="number" class="form-control" id="phone" name="phone" value="<?= $edit ? $user->phone : '' ?>" required>
+                        <input type="number" class="form-control" id="phone" name="phone" value="<?= $edit ? $user->phone : '' ?>">
                     </div>
 
                     {{-- Email --}}
                     <div class="col">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="<?= $edit ? $user->email : '' ?>" required>
+                        <input type="email" class="form-control" id="email" name="email" value="<?= $edit ? $user->email : '' ?>">
                     </div>
                 </div>
 
@@ -109,7 +109,6 @@
             </div>
         </div>
     {!! Form::close() !!} 
-    @include('layouts.errors')
 </div>
 @include('layouts.scripts')
 @endsection

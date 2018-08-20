@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+@include('layouts.errors')
     <div class="row">
         {{-- Left Panel Column --}}
         <div class="col col-3 ">

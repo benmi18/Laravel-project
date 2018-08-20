@@ -1,5 +1,6 @@
 @extends('layouts.master') 
 @section('content')
+@include('layouts.errors')
     <div class="row">
         <div class="col col-6">
             @include('layouts.school-left-panel')

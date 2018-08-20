@@ -1,9 +1,9 @@
 @if ($errors->any())
     <div class="form-froup">
         <div class="alert alert-danger">
-            <ul>
+            <ul class="list-group">
                 @foreach ($errors->all() as $error)
-                    <li>{{$error}}</li>
+                    <li class="list-group-item list-group-item-danger text-center">** {{$error}} **</li>
                 @endforeach
             </ul>
         </div>

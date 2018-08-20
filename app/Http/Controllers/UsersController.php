@@ -84,7 +84,14 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        // return $user->image;
+        $error = 'Back Off, you do not have the right permissions to enter this page';
+        if ($user->role == 'owner') {
+            if (Gate::allows('owner', auth()->user())) {
+                return view('pages.admin')->nest('show', 'users.show', compact('user'));
+            }
+            return redirect()->back()->withErrors($error);
+        }
+        
         return view('pages.admin')->nest('show', 'users.show', compact('user'));
     }
 
@@ -96,6 +103,14 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        $error = 'Back Off, you do not have the right permissions to enter this page';
+        if ($user->role == 'owner') {
+            if (Gate::allows('owner', auth()->user())) {
+                return view('pages.admin')->nest('create', 'users.create', compact('user'));
+            }
+            return redirect()->back()->withErrors($error);
+        }
+
         return view('pages.admin')->nest('create', 'users.create', compact('user'));
     }
 
@@ -114,12 +129,12 @@ class UsersController extends Controller
             'phone' => 'required|integer',
             'email' => 'required|email',
             'image' => 'image|nullable|max:1700',
-            'role' => 'in:manager,sales',
+            'role' => 'nullable|in:manager,sales',
         ]);
 
-        // Validate Password
+        // Validate New Password If Changed
         if (request('password')) {
-            $this->validate(request(), [
+             $this->validate(request(), [
                 'password' => 'string|min:6|confirmed'
             ]);
         }
@@ -136,14 +151,24 @@ class UsersController extends Controller
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
             $path = request()->file('image')->storeAs('public/images/users', $fileNameToStore);
+            // Update the User image
+            $user->image = $fileNameToStore;
         } 
 
         // Update The User
         $user->name = $request->input('name');
         $user->phone = $request->input('phone'); 
-        $user->email = $request->input('email'); 
-        $user->password = $request->input('password'); 
-        $user->role = $request->input('role'); 
+        $user->email = $request->input('email');
+        // Update User Role If Changed 
+        if (request('role')) {
+           $user->role = request('role');
+        }
+        // Update Password If Changed
+        if (request('password')) {
+            $user->password = Hash::make(request('password'));
+        }
+        // Save All Changes
+        $user->save();
 
         return redirect('/users/'.$user->id)->with('success', 'Student Created');
     }

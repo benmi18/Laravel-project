@@ -22,7 +22,7 @@
     
     {{-- Delete button --}} 
     @if ($edit) 
-        {!! Form::open(['action' => ['StudentsController@destroy', $student->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} 
+        {!! Form::open(['action' => ['StudentsController@destroy', $student->id], 'method' => 'POST']) !!} 
             {{ method_field('DELETE') }} 
             {{Form::submit('Delete', ['class' => 'btn btn-danger mb-2 float-right', 'id' => 'delete-btn'])}}
         {!! Form::close() !!} 
@@ -47,15 +47,15 @@
             <div class="col col-7">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" value="<?= $edit ? $student->name : '' ?>" required>
+                    <input type="text" class="form-control" id="name" name="name" value="<?= $edit ? $student->name : '' ?>" >
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="number" class="form-control" id="phone" name="phone" value="<?= $edit ? $student->phone : '' ?>" required>
+                    <input type="number" class="form-control" id="phone" name="phone" value="<?= $edit ? $student->phone : '' ?>" >
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<?= $edit ? $student->email : '' ?>" required>
+                    <input type="email" class="form-control" id="email" name="email" value="<?= $edit ? $student->email : '' ?>" >
                 </div>
             </div>
 
@@ -90,7 +90,6 @@
             @endforeach
         </div>
     {!! Form::close() !!} 
-    @include('layouts.errors')
 </div>
 @include('layouts.scripts')
 @endsection
