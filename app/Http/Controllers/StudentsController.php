@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Gate;
 use App\Student;
 use App\Course;
 use Illuminate\Http\Request;
@@ -14,7 +15,6 @@ class StudentsController extends Controller
 
     public function __construct(){
         $this->middleware('auth');
-        $this->middleware('manager', ['only' => ['create', 'store', 'destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -33,8 +33,12 @@ class StudentsController extends Controller
      */
     public function create()
     {
-        $courses = Course::all();
-        return view('pages.school')->nest('create', 'students.create', compact('courses'));
+        $error = 'Back Off, you do not have the right permissions to enter this page';
+        if (Gate::allows('manager', auth()->user())) {
+            $courses = Course::all();
+            return view('pages.school')->nest('create', 'students.create', compact('courses'));
+        }
+        return redirect()->back()->withErrors($error);
     }
 
     /**
@@ -155,6 +159,11 @@ class StudentsController extends Controller
      */
     public function destroy(Student $student)
     {
+        $error = 'Back Off, you do not have the right permissions to enter this page';
+        if (Gate::denies('salse', auth()->user())) {
+            return redirect()->back()->withErrors($error);
+        }
+        
         $errors = new MessageBag();
         // Student in course error
         $errors->add('studen_in_course', 'Student in course');

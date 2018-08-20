@@ -20,7 +20,7 @@
         <hr>
 
         {{-- Delete button --}} 
-        @if ($edit) 
+        @if ($edit && auth()->user()->role != 'sales') 
             {!! Form::open(['action' => ['CoursesController@destroy', $course->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} 
                 {{ method_field('DELETE') }} 
                 {{Form::submit('Delete', ['class' => 'btn btn-danger mb-2 float-right', 'id' => 'delete-btn'])}}

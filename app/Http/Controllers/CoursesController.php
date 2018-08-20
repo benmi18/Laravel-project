@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Course;
 use App\Student;
 
@@ -13,7 +14,6 @@ class CoursesController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
-        $this->middleware('manager', ['only' => ['create', 'store', 'destroy', 'edit', 'update']]);
     }
     /**
      * Display a listing of the resource.
@@ -32,7 +32,11 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        return view('pages.school')->nest('create', 'courses.create');
+        $error = 'Back Off, you do not have the right permissions to enter this page';
+        if (Gate::allows('manager', auth()->user())) {
+            return view('pages.school')->nest('create', 'courses.create');
+        }
+        return redirect()->back()->withErrors($error);
     }
 
     /**
@@ -95,6 +99,10 @@ class CoursesController extends Controller
      */
     public function edit(Course $course)
     {
+        $error = 'Back Off, you do not have the right permissions to enter this page';
+        if (Gate::denies('salse', auth()->user())) {
+            return redirect()->back()->withErrors($error);
+        }
         return view('pages.school')->nest('create', 'courses.create', compact('course'));
     }
 

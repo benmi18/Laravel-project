@@ -21,7 +21,7 @@
 
     
     {{-- Delete button --}} 
-    @if ($edit) 
+    @if ($edit && $user->id != auth()->user()->id) 
         {!! Form::open(['action' => ['UsersController@destroy', $user->id], 'method' => 'POST']) !!} 
             {{ method_field('DELETE') }} 
             {{Form::submit('Delete', ['class' => 'btn btn-danger mb-2 float-right', 'id' => 'delete-btn'])}}
@@ -54,7 +54,7 @@
                     {{-- Role Options --}}
                     <div class="col">
                         <label for="role">Role</label>
-                        <select name="role" class="form-control" @if ($edit && $user->role == 'owner') disabled @endif>
+                        <select name="role" class="form-control" @if ($edit && $user->role == 'owner' || $edit &&  $user->id == auth()->user()->id) disabled @endif>
                             <option></option>
                             <option value="manager">Manager</option>
                             <option value="sales">Sales</option>

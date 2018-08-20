@@ -7,9 +7,11 @@
                 <h5>Cource: {{$course->name}}</h5>
             </div>
 
-            <div class="col col-2">
-                <a href="/courses/{{$course->id}}/edit" class="btn btn-primary">Edit</a>
-            </div>
+            @if (auth()->user()->role != 'sales')
+                <div class="col col-2">
+                    <a href="/courses/{{$course->id}}/edit" class="btn btn-primary">Edit</a>
+                </div>
+            @endif
         @endsection
 
         <div class="row mb-5">

@@ -13,6 +13,9 @@
 {{-- List Section --}}
 <ul class="list-group">
     @foreach ($users as $user)
+        @if (auth()->user()->role == 'manager' && $user->role == 'owner')
+            @continue
+        @endif
         <a href="/users/{{$user->id}}">
             <li class="list-group-item mb-2">
                 <div class="row">

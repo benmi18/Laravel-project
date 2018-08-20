@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -86,7 +87,7 @@ class UsersController extends Controller
     {
         $error = 'Back Off, you do not have the right permissions to enter this page';
         if ($user->role == 'owner') {
-            if (Gate::allows('owner', auth()->user())) {
+            if (Gate::allows('owner-only', auth()->user())) {
                 return view('pages.admin')->nest('show', 'users.show', compact('user'));
             }
             return redirect()->back()->withErrors($error);
@@ -105,7 +106,7 @@ class UsersController extends Controller
     {
         $error = 'Back Off, you do not have the right permissions to enter this page';
         if ($user->role == 'owner') {
-            if (Gate::allows('owner', auth()->user())) {
+            if (Gate::allows('owner-only', auth()->user())) {
                 return view('pages.admin')->nest('create', 'users.create', compact('user'));
             }
             return redirect()->back()->withErrors($error);
