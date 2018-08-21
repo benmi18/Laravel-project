@@ -100,10 +100,10 @@ class CoursesController extends Controller
     public function edit(Course $course)
     {
         $error = 'Back Off, you do not have the right permissions to enter this page';
-        if (Gate::denies('salse', auth()->user())) {
-            return redirect()->back()->withErrors($error);
+        if (Gate::allows('manager', auth()->user())) {
+            return view('pages.school')->nest('create', 'courses.create', compact('course'));
         }
-        return view('pages.school')->nest('create', 'courses.create', compact('course'));
+        return redirect()->back()->withErrors($error);
     }
 
     /**

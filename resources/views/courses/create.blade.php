@@ -74,8 +74,6 @@
             @if ($edit)
                 <h3>{{count($course->students)}} students taking this course</h3>
             @endif
-
-            @include('layouts.errors')
         </form>
     </div>
 

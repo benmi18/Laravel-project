@@ -160,25 +160,24 @@ class StudentsController extends Controller
     public function destroy(Student $student)
     {
         $error = 'Back Off, you do not have the right permissions to enter this page';
-        if (Gate::denies('salse', auth()->user())) {
-            return redirect()->back()->withErrors($error);
-        }
-        
-        $errors = new MessageBag();
-        // Student in course error
-        $errors->add('studen_in_course', 'Student in course');
+        if (Gate::allows('manager', auth()->user())) {
+            $errors = new MessageBag();
+            // Student in course error
+            $errors->add('studen_in_course', 'Student in course');
 
-        // Check for courses
-        if (count($student->courses)) {
-            return redirect()->back()->withErrors($errors);
-        }
+            // Check for courses
+            if (count($student->courses)) {
+                return redirect()->back()->withErrors($errors);
+            }
 
-        if ($student->image != 'student.jpg') {
-            // Delete the image
-            Storage::delete('public/images/students'.$student->image);
-        }
+            if ($student->image != 'student.jpg') {
+                // Delete the image
+                Storage::delete('public/images/students'.$student->image);
+            }
 
-        $student->delete();
-        return redirect('/')->with('success', 'Student Removed');
+            $student->delete();
+            return redirect('/')->with('success', 'Student Removed');
+        }
+        return redirect()->back()->withErrors($error);
     }
 }
