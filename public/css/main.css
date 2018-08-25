@@ -118,6 +118,19 @@ body {
     max-width: 50px;
 }
 
+.list-container{
+    height: 80vh;
+    overflow-x: hidden;
+}
+
+.glyph-icon{
+    width: 50%;
+}
+
+.display-img{
+    width: 100%;
+}
+
 @media (min-width: 1200px) {
     .container {
         max-width: 1500px !important;

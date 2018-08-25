@@ -139,7 +139,7 @@ class StudentsController extends Controller
             // Delete Old File
             if ($student->image != 'student.jpg') {
                 // Delete the image
-                Storage::delete('public/images/students'.$student->image);
+                Storage::delete('public/images/students/'.$student->image);
             }
             // Update the student
             $student->image = $fileNameToStore;

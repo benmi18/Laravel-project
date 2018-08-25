@@ -1,27 +1,30 @@
 {{-- Title Section --}}
-<div class="row mb-2">
+<div class="row mb-3">
     <div class="col col-9">
         <h4>Admins</h4>
     </div>
-    <div class="col col-3">
+    <div class="col col-3 w-5">
         <a href="/users/create">
-            <img src="/storage/images/plus.png" width="65%">
+            <img src="/storage/icons/svg/si-glyph-button-plus.svg" class="glyph-icon"/>
         </a>
     </div>
 </div>
 
 {{-- List Section --}}
-<ul class="list-group">
+<ul class="list-group list-container">
     @foreach ($users as $user)
+        {{-- Check if Manager is loged in, then skip the owner print --}}
         @if (auth()->user()->role == 'manager' && $user->role == 'owner')
             @continue
         @endif
+
+        {{-- Print all the users --}}
         <a href="/users/{{$user->id}}">
             <li class="list-group-item mb-2">
                 <div class="row">
                     {{-- image --}}
                     <div class="col col-4">
-                        <img src="/storage/images/users/{{$user->image}}" alt="" width="100%">
+                        <img src="/storage/images/users/{{$user->image}}" alt="" class="display-img">
                     </div>
                     
                     {{-- Name/Phone --}}

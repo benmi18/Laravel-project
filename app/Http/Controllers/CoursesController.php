@@ -133,7 +133,7 @@ class CoursesController extends Controller
             $path = request()->file('image')->storeAs('public/images/courses', $fileNameToStore);
             // Delete Old File
             if ($course->image != 'course.jpg') {
-                Storage::delete('public/images/courses'.$course->image);
+                Storage::delete('public/images/courses/'.$course->image);
             }
             // Update the student
             $course->image = $fileNameToStore;

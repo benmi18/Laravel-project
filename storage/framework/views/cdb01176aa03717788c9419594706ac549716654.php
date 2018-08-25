@@ -16,6 +16,6 @@
 
     // Delete Confirm
     $('#delete-btn').on('click', function(){
-        return confirm('Are you sure?')
+        return confirm('Are you sure you want to delete?')
     })
 </script>

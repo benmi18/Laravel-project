@@ -2,19 +2,23 @@
     
     <div class="col col-6">
         
-        <div class="row">
+        <div class="row mb-3">
             <div class="col col-9">
                 <h4>Courses</h4>
             </div>
-            <div class="col col-3">
-                <a href="/courses/create">
-                    <img src="/storage/images/plus.png" width="65%">
-                </a>
-            </div>
+
+            
+            <?php if(auth()->user()->role != 'sales'): ?>
+                <div class="col col-3">
+                    <a href="/courses/create">
+                        <img src="/storage/icons/svg/si-glyph-button-plus.svg" class="glyph-icon"/>
+                    </a>
+                </div>
+            <?php endif; ?>
         </div>
 
         
-        <ul class="list-group">
+        <ul class="list-group list-container">
             <?php $__currentLoopData = $courses; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $course): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <a href="/courses/<?php echo e($course->id); ?>">
                     <li class="list-group-item mb-2">
@@ -36,19 +40,21 @@
     
     <div class="col col-6">
         
-        <div class="row">
+        <div class="row mb-3">
             <div class="col col-9">
                 <h4>Students</h4>
             </div>
-            <div class="col col-3">
-                <a href="/students/create">
-                    <img src="/storage/images/plus.png" width="65%">
-                </a>
-            </div>
+            <?php if(auth()->user()->role != 'sales'): ?>
+                <div class="col col-3">
+                    <a href="/students/create">
+                        <img src="/storage/icons/svg/si-glyph-button-plus.svg" class="glyph-icon"/>
+                    </a>
+                </div>
+            <?php endif; ?>
         </div>
 
         
-        <ul class="list-group">
+        <ul class="list-group list-container">
             <?php $__currentLoopData = $students; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $student): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <a href="/students/<?php echo e($student->id); ?>">
                     <li class="list-group-item mb-2">
