@@ -152,6 +152,10 @@ class UsersController extends Controller
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
             $path = request()->file('image')->storeAs('public/images/users', $fileNameToStore);
+            // Delete Old File
+            if ($user->image != 'user.jpg') {
+                Storage::delete('public/images/users/'.$user->image);
+            }
             // Update the User image
             $user->image = $fileNameToStore;
         } 
@@ -184,7 +188,7 @@ class UsersController extends Controller
     {
         if ($user->image != 'user.jpg') {
             // Delete the image
-            Storage::delete('public/images/users'.$user->image);
+            Storage::delete('public/images/users/'.$user->image);
         }
 
         $user->delete();

@@ -136,6 +136,11 @@ class StudentsController extends Controller
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
             $path = request()->file('image')->storeAs('public/images/students', $fileNameToStore);
+            // Delete Old File
+            if ($student->image != 'student.jpg') {
+                // Delete the image
+                Storage::delete('public/images/students'.$student->image);
+            }
             // Update the student
             $student->image = $fileNameToStore;
         } 

@@ -65,16 +65,14 @@ class CoursesController extends Controller
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
             $path = request()->file('image')->storeAs('public/images/courses', $fileNameToStore);
-
-            // Update the student
-            // return $fileNameToStore;
-            $course->image = $fileNameToStore;
-            
-        } 
+        } else {
+            $fileNameToStore = 'course.jpg';
+        }
         
         // Update Course 
         $course->name = $request->input('name');
         $course->description = $request->input('description');
+        $course->image = $fileNameToStore;
         $course->save();
 
         return redirect('/courses/'.$course->id)->with('success', 'Student Created');
@@ -133,7 +131,10 @@ class CoursesController extends Controller
             $fileNameToStore = $filename.'_'.time().'.'.$extension;
             // Upload Image
             $path = request()->file('image')->storeAs('public/images/courses', $fileNameToStore);
-
+            // Delete Old File
+            if ($course->image != 'course.jpg') {
+                Storage::delete('public/images/courses'.$course->image);
+            }
             // Update the student
             $course->image = $fileNameToStore;
         } 
